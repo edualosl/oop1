@@ -1,0 +1,57 @@
+using System;
+using System.Windows.Forms;
+
+class Program
+{
+    [STAThread]
+    static void Main()
+    {
+        Form form = new Form();
+        form.Text = "Зміна порядку цифр числа";
+
+        TextBox textBoxN = new TextBox();
+        textBoxN.Location = new System.Drawing.Point(10, 10);
+        form.Controls.Add(textBoxN);
+
+        Label labelN = new Label();
+        labelN.Text = "Введіть число:";
+        labelN.Location = new System.Drawing.Point(150, 10);
+        form.Controls.Add(labelN);
+
+        Button button = new Button();
+        button.Text = "Змінити порядок цифр";
+        button.Location = new System.Drawing.Point(10, 40);
+        button.Click += (sender, e) =>
+        {
+            try
+            {
+                int n = int.Parse(textBoxN.Text);
+                int reversedNumber = ReverseNumber(n);
+
+                MessageBox.Show($"Число зі зміненим порядком цифр: {reversedNumber}");
+            }
+            catch (FormatException)
+            {
+                MessageBox.Show("Невірний формат числа!");
+            }
+        };
+        form.Controls.Add(button);
+
+        Application.Run(form);
+    }
+
+    static int ReverseNumber(int number)
+    {
+        try
+        {
+            // Перетворюємо число на рядок, робимо реверс та знову перетворюємо на ціле число
+            string reversedString = new string(number.ToString().ToCharArray().Reverse().ToArray());
+            return int.Parse(reversedString);
+        }
+        catch (OverflowException)
+        {
+            MessageBox.Show("Переповнення числа!");
+            return 0;
+        }
+    }
+}

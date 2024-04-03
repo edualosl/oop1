@@ -1,0 +1,87 @@
+using System;
+using System.Windows.Forms;
+
+class Program
+{
+    [STAThread]
+    static void Main()
+    {
+        Form form = new Form();
+        form.Text = "Взаємне розташування точки та кола";
+
+        TextBox textBoxX0 = new TextBox();
+        textBoxX0.Location = new System.Drawing.Point(10, 10);
+        form.Controls.Add(textBoxX0);
+
+        TextBox textBoxY0 = new TextBox();
+        textBoxY0.Location = new System.Drawing.Point(10, 40);
+        form.Controls.Add(textBoxY0);
+
+        TextBox textBoxX1 = new TextBox();
+        textBoxX1.Location = new System.Drawing.Point(10, 70);
+        form.Controls.Add(textBoxX1);
+
+        TextBox textBoxY1 = new TextBox();
+        textBoxY1.Location = new System.Drawing.Point(10, 100);
+        form.Controls.Add(textBoxY1);
+
+        TextBox textBoxR = new TextBox();
+        textBoxR.Location = new System.Drawing.Point(10, 130);
+        form.Controls.Add(textBoxR);
+
+        Label labelX0 = new Label();
+        labelX0.Text = "Координата x0:";
+        labelX0.Location = new System.Drawing.Point(150, 10);
+        form.Controls.Add(labelX0);
+
+        Label labelY0 = new Label();
+        labelY0.Text = "Координата y0:";
+        labelY0.Location = new System.Drawing.Point(150, 40);
+        form.Controls.Add(labelY0);
+
+        Label labelX1 = new Label();
+        labelX1.Text = "Координата x1:";
+        labelX1.Location = new System.Drawing.Point(150, 70);
+        form.Controls.Add(labelX1);
+
+        Label labelY1 = new Label();
+        labelY1.Text = "Координата y1:";
+        labelY1.Location = new System.Drawing.Point(150, 100);
+        form.Controls.Add(labelY1);
+
+        Label labelR = new Label();
+        labelR.Text = "Радіус R:";
+        labelR.Location = new System.Drawing.Point(150, 130);
+        form.Controls.Add(labelR);
+
+        Button button = new Button();
+        button.Text = "Перевірити";
+        button.Location = new System.Drawing.Point(10, 160);
+        button.Click += (sender, e) =>
+        {
+            try
+            {
+                double x0 = double.Parse(textBoxX0.Text);
+                double y0 = double.Parse(textBoxY0.Text);
+
+                double x1 = double.Parse(textBoxX1.Text);
+                double y1 = double.Parse(textBoxY1.Text);
+
+                double R = double.Parse(textBoxR.Text);
+
+                double distance = Math.Sqrt(Math.Pow(x1 - x0, 2) + Math.Pow(y1 - y0, 2));
+
+                bool isPointInCircle = distance < R;
+
+                MessageBox.Show($"Точка знаходиться в колі: {isPointInCircle}");
+            }
+            catch (FormatException)
+            {
+                MessageBox.Show("Невірний формат числа!");
+            }
+        };
+        form.Controls.Add(button);
+
+        Application.Run(form);
+    }
+}

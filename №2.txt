@@ -1,0 +1,64 @@
+using System;
+using System.Windows.Forms;
+
+class Program
+{
+    [STAThread]
+    static void Main()
+    {
+        Form form = new Form();
+        form.Text = "Обчислення опору з'єднання";
+
+        TextBox textBoxR1 = new TextBox();
+        textBoxR1.Location = new System.Drawing.Point(10, 10);
+        form.Controls.Add(textBoxR1);
+
+        TextBox textBoxR2 = new TextBox();
+        textBoxR2.Location = new System.Drawing.Point(10, 40);
+        form.Controls.Add(textBoxR2);
+
+        TextBox textBoxR3 = new TextBox();
+        textBoxR3.Location = new System.Drawing.Point(10, 70);
+        form.Controls.Add(textBoxR3);
+
+        Label labelR1 = new Label();
+        labelR1.Text = "Опір R1:";
+        labelR1.Location = new System.Drawing.Point(150, 10);
+        form.Controls.Add(labelR1);
+
+        Label labelR2 = new Label();
+        labelR2.Text = "Опір R2:";
+        labelR2.Location = new System.Drawing.Point(150, 40);
+        form.Controls.Add(labelR2);
+
+        Label labelR3 = new Label();
+        labelR3.Text = "Опір R3:";
+        labelR3.Location = new System.Drawing.Point(150, 70);
+        form.Controls.Add(labelR3);
+
+        Button button = new Button();
+        button.Text = "Обчислити опір з'єднання";
+        button.Location = new System.Drawing.Point(10, 100);
+        button.Click += (sender, e) =>
+        {
+            try
+            {
+                double R1 = double.Parse(textBoxR1.Text);
+                double R2 = double.Parse(textBoxR2.Text);
+                double R3 = double.Parse(textBoxR3.Text);
+
+                double reciprocalR = 1 / R1 + 1 / R2 + 1 / R3;
+                double R_parallel = 1 / reciprocalR;
+
+                MessageBox.Show($"Опір з'єднання: {R_parallel}");
+            }
+            catch (FormatException)
+            {
+                MessageBox.Show("Невірний формат числа!");
+            }
+        };
+        form.Controls.Add(button);
+
+        Application.Run(form);
+    }
+}

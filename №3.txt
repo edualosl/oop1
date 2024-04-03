@@ -1,0 +1,63 @@
+using System;
+using System.Windows.Forms;
+
+class Program
+{
+    [STAThread]
+    static void Main()
+    {
+        Form form = new Form();
+        form.Text = "Перевірка точки в області";
+
+        TextBox textBoxX = new TextBox();
+        textBoxX.Location = new System.Drawing.Point(10, 10);
+        form.Controls.Add(textBoxX);
+
+        TextBox textBoxT = new TextBox();
+        textBoxT.Location = new System.Drawing.Point(10, 40);
+        form.Controls.Add(textBoxT);
+
+        TextBox textBoxN = new TextBox();
+        textBoxN.Location = new System.Drawing.Point(10, 70);
+        form.Controls.Add(textBoxN);
+
+        Label labelX = new Label();
+        labelX.Text = "Координата x:";
+        labelX.Location = new System.Drawing.Point(150, 10);
+        form.Controls.Add(labelX);
+
+        Label labelT = new Label();
+        labelT.Text = "Значення t:";
+        labelT.Location = new System.Drawing.Point(150, 40);
+        form.Controls.Add(labelT);
+
+        Label labelN = new Label();
+        labelN.Text = "Значення n:";
+        labelN.Location = new System.Drawing.Point(150, 70);
+        form.Controls.Add(labelN);
+
+        Button button = new Button();
+        button.Text = "Перевірити";
+        button.Location = new System.Drawing.Point(10, 100);
+        button.Click += (sender, e) =>
+        {
+            try
+            {
+                double x = double.Parse(textBoxX.Text);
+                double t = double.Parse(textBoxT.Text);
+                double n = double.Parse(textBoxN.Text);
+
+                bool isPointInRegion = (x > t) && (x < n);
+
+                MessageBox.Show($"Точка знаходиться в області: {isPointInRegion}");
+            }
+            catch (FormatException)
+            {
+                MessageBox.Show("Невірний формат числа!");
+            }
+        };
+        form.Controls.Add(button);
+
+        Application.Run(form);
+    }
+}

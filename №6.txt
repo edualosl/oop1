@@ -1,0 +1,77 @@
+using System;
+using System.Linq;
+using System.Windows.Forms;
+
+class Program
+{
+    [STAThread]
+    static void Main()
+    {
+        Form form = new Form();
+        form.Text = "Пошук пари елементів масиву з середнім арифметичним, найближчим до x";
+
+        TextBox textBoxX = new TextBox();
+        textBoxX.Location = new System.Drawing.Point(10, 10);
+        form.Controls.Add(textBoxX);
+
+        Label labelX = new Label();
+        labelX.Text = "Введіть число x:";
+        labelX.Location = new System.Drawing.Point(150, 10);
+        form.Controls.Add(labelX);
+
+        TextBox textBoxArray = new TextBox();
+        textBoxArray.Location = new System.Drawing.Point(10, 40);
+        form.Controls.Add(textBoxArray);
+
+        Label labelArray = new Label();
+        labelArray.Text = "Введіть масив A (розділіть елементи пробілами):";
+        labelArray.Location = new System.Drawing.Point(150, 40);
+        form.Controls.Add(labelArray);
+
+        Button button = new Button();
+        button.Text = "Знайти пару елементів";
+        button.Location = new System.Drawing.Point(10, 70);
+        button.Click += (sender, e) =>
+        {
+            try
+            {
+                double x = double.Parse(textBoxX.Text);
+                double[] array = textBoxArray.Text.Split(' ').Select(double.Parse).ToArray();
+
+                FindClosestPair(x, array, out double closestPairElement1, out double closestPairElement2);
+
+                MessageBox.Show($"Найдближча пара елементів: {closestPairElement1} та {closestPairElement2}");
+            }
+            catch (FormatException)
+            {
+                MessageBox.Show("Невірний формат числа!");
+            }
+        };
+        form.Controls.Add(button);
+
+        Application.Run(form);
+    }
+
+    static void FindClosestPair(double x, double[] array, out double closestPairElement1, out double closestPairElement2)
+    {
+        closestPairElement1 = 0;
+        closestPairElement2 = 0;
+        double minDifference = double.MaxValue;
+
+        for (int i = 0; i < array.Length - 1; i++)
+        {
+            for (int j = i + 1; j < array.Length; j++)
+            {
+                double average = (array[i] + array[j]) / 2.0;
+                double difference = Math.Abs(x - average);
+
+                if (difference < minDifference)
+                {
+                    minDifference = difference;
+                    closestPairElement1 = array[i];
+                    closestPairElement2 = array[j];
+                }
+            }
+        }
+    }
+}

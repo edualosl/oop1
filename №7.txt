@@ -1,0 +1,51 @@
+using System;
+using System.Windows.Forms;
+
+class Program
+{
+    [STAThread]
+    static void Main()
+    {
+        Form form = new Form();
+        form.Text = "Підрахунок кількості букв у рядку";
+
+        TextBox textBoxString = new TextBox();
+        textBoxString.Location = new System.Drawing.Point(10, 10);
+        form.Controls.Add(textBoxString);
+
+        Label labelString = new Label();
+        labelString.Text = "Введіть рядок:";
+        labelString.Location = new System.Drawing.Point(150, 10);
+        form.Controls.Add(labelString);
+
+        Button button = new Button();
+        button.Text = "Підрахувати";
+        button.Location = new System.Drawing.Point(10, 40);
+        button.Click += (sender, e) =>
+        {
+            string inputString = textBoxString.Text;
+
+            int countR = CountCharacterOccurrences(inputString, 'r');
+            int countK = CountCharacterOccurrences(inputString, 'k');
+            int countT = CountCharacterOccurrences(inputString, 't');
+
+            MessageBox.Show($"Кількість букв r: {countR}\nКількість букв k: {countK}\nКількість букв t: {countT}");
+        };
+        form.Controls.Add(button);
+
+        Application.Run(form);
+    }
+
+    static int CountCharacterOccurrences(string input, char character)
+    {
+        int count = 0;
+        foreach (char c in input)
+        {
+            if (c == character)
+            {
+                count++;
+            }
+        }
+        return count;
+    }
+}
